@@ -81,12 +81,13 @@ class JsxNode(template.Node):
 
     def generate_config_file(self):
         config_file = os.path.join(self.pre_bundle_dir, f"{self.id}.config.js")
+
         config_content = """
         module.exports = {
-            entry: '{}/{}.jsx',
+            entry: '""" + self.pre_bundle_file + """',
             output: {
-                path: '{}',
-                filename: '{}.js',
+                path: '""" + self.post_bundle_dir + """',
+                filename: '""" + self.id + """.js',
             },
             module: {
                 rules: [
@@ -103,7 +104,7 @@ class JsxNode(template.Node):
                 ]
             }
         };
-        """.format(self.pre_bundle_dir, self.id, self.post_bundle_dir, self.id)
+        """
         return self.write_file(config_file, config_content)
 
     def render(self, context):
