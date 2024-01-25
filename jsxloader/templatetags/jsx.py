@@ -8,6 +8,12 @@ import string
 
 register = template.Library()
 
+class Config:
+    base_dir = ""
+    pre_bundle_dir = "prebundle"
+    post_bundle_dir = "postbundle"
+    config_dir = "config"
+
 
 @register.tag(name="jsx")
 def do_jsx(parser, token):
@@ -19,18 +25,22 @@ def do_jsx(parser, token):
 class JsxNode(template.Node):
     def __init__(self, nodelist):
         self.nodelist = nodelist
+        self.config = Config()
 
-        self.pre_bundle_dir = self.get_dir("prebundle")
-        self.post_bundle_dir = self.get_dir("postbundle")
+        self.base_dir = self.config.base_dir
+        self.pre_bundle_dir = self.get_dir(self.config.pre_bundle_dir)
+        self.post_bundle_dir = self.get_dir(self.config.post_bundle_dir)
+        self.config_dir = self.get_dir(self.config.config_dir)
+
         self.id = self.generate_random_id()
         self.pre_bundle_file = os.path.join(self.pre_bundle_dir, self.id + ".jsx")
-        self.jsx_content = self.nodelist.render({})
+        # self.content = self.nodelist.render({})
 
-    def write_file(self, filename, content):
+    def write_file(self, path, content):
         try:
-            with open(filename, "w") as file:
+            with open(path, "w") as file:
                 file.write(content)
-                return filename
+                return path
         except FileNotFoundError:
             print("Error: File not found.")
         except PermissionError:
@@ -40,7 +50,7 @@ class JsxNode(template.Node):
         return False
 
     def get_dir(self, name):
-        path = os.path.join(settings.BASE_DIR, name)
+        path = os.path.join(settings.BASE_DIR, self.base_dir, name)
 
         if not os.path.exists(path):
             os.makedirs(path)
@@ -54,10 +64,11 @@ class JsxNode(template.Node):
     def generate_placeholder_element(self):
         return f'<div id="{self.id}"></div>'
 
-    def bundle_jsx_file(self, config_file):
+    def bundle_jsx_file(self):
         output_file = os.path.join(self.post_bundle_dir, self.id + ".js")
+
         # command = f"npx webpack --mode development --entry {self.pre_bundle_file} --output-path {self.post_bundle_dir} --output-filename {self.id}.js --module-bind js=babel-loader"
-        command = f"npx webpack --mode development --entry {self.pre_bundle_file} --output-path {self.post_bundle_dir} --output-filename {self.id}.js --module-bind js=babel-loader"
+        command = f"npx webpack --mode development "
         print(command)
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         print(result.stdout)
@@ -69,14 +80,15 @@ class JsxNode(template.Node):
         return output_file
 
     def generate_config_file(self):
-        config_file = os.path.join(self.pre_bundle_dir, "webpack.config.js")
+        config_file = os.path.join(self.pre_bundle_dir, f"{self.id}.config.js")
         config_content = """
+        const path = require('path');
+
         module.exports = {
             entry: '{}/{}.jsx',
             output: {
                 path: '{}',
                 filename: '{}.js',
-                target: 'amd',
             },
             module: {
                 rules: [
@@ -97,7 +109,9 @@ class JsxNode(template.Node):
         return self.write_file(config_file, config_content)
 
     def render(self, context):
-        if self.write_file(self.pre_bundle_file, self.jsx_content):
+        self.content = self.nodelist.render(context)
+        if self.write_file(self.pre_bundle_file, self.content):
+            self.generate_config_file()
             self.bundle_jsx_file()
 
 
@@ -106,4 +120,5 @@ class JsxNode(template.Node):
 
 
 # TODO : Configuration option to choose output location. default: /static/
+# TODO:TEST: The need for path import in config file.
 # TODO: Add option in tag declaration for naming the JSX Component instead of using random.
