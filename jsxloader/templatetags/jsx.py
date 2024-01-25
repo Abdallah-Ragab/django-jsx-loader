@@ -68,7 +68,7 @@ class JsxNode(template.Node):
         output_file = os.path.join(self.post_bundle_dir, self.id + ".js")
 
         # command = f"npx webpack --mode development --entry {self.pre_bundle_file} --output-path {self.post_bundle_dir} --output-filename {self.id}.js --module-bind js=babel-loader"
-        command = f"npx webpack --mode development "
+        command = f'npx webpack --mode development --config "{self.config_file}"'
         print(command)
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         print(result.stdout)
@@ -110,7 +110,7 @@ class JsxNode(template.Node):
     def render(self, context):
         self.content = self.nodelist.render(context)
         if self.write_file(self.pre_bundle_file, self.content):
-            self.generate_config_file()
+            self.config_file = self.generate_config_file()
             self.bundle_jsx_file()
 
 
