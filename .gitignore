@@ -2,6 +2,10 @@ project/
 app/
 manage.py
 db.sqlite3
+prebundle/
+postbundle/
+config/
+jsx_modules/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
