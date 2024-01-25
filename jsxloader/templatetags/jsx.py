@@ -34,6 +34,7 @@ class JsxNode(template.Node):
 
         self.id = self.generate_random_id()
         self.pre_bundle_file = os.path.join(self.pre_bundle_dir, self.id + ".jsx")
+        self.post_bundle_file = os.path.join(self.post_bundle_dir, self.id + ".js")
         # self.content = self.nodelist.render({})
 
     def write_file(self, path, content):
@@ -87,7 +88,6 @@ class JsxNode(template.Node):
             entry: '""" + self.pre_bundle_file + """',
             output: {
                 path: '""" + self.post_bundle_dir + """',
-                filename: '""" + self.id + """.js',
             },
             module: {
                 rules: [
@@ -106,6 +106,18 @@ class JsxNode(template.Node):
         };
         """
         return self.write_file(config_file, config_content)
+
+    def generate_jsx_render_js_file(self, target_id, jsx_content):
+        render_js_file = os.path.join(self.post_bundle_dir, f"{self.id}.js")
+
+        render_js_content = f"""
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+        import Component from '{self.post_bundle_file}';
+
+        ReactDOM.render(<Component />, document.getElementById('{target_id}'));
+        """
+        return self.write_file(render_js_file, render_js_content)
 
     def render(self, context):
         self.content = self.nodelist.render(context)
