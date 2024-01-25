@@ -42,11 +42,11 @@ class JsxNode(template.Node):
                 file.write(content)
                 return path
         except FileNotFoundError:
-            print("Error: File not found.")
+            print(f"Error writing '{path}' file: File not found.")
         except PermissionError:
-            print("Error: Permission denied.")
+            print(f"Error writing '{path}' file: Permission denied.")
         except Exception as e:
-            print(f"Error: {str(e)}")
+            print(f"Error writing '{path}' file: {str(e)}")
         return False
 
     def get_dir(self, name):
@@ -82,8 +82,6 @@ class JsxNode(template.Node):
     def generate_config_file(self):
         config_file = os.path.join(self.pre_bundle_dir, f"{self.id}.config.js")
         config_content = """
-        const path = require('path');
-
         module.exports = {
             entry: '{}/{}.jsx',
             output: {
@@ -120,5 +118,4 @@ class JsxNode(template.Node):
 
 
 # TODO : Configuration option to choose output location. default: /static/
-# TODO:TEST: The need for path import in config file.
 # TODO: Add option in tag declaration for naming the JSX Component instead of using random.
