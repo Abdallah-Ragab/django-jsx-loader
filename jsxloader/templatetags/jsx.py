@@ -9,7 +9,7 @@ import string
 register = template.Library()
 
 class Config:
-    base_dir = ""
+    base_dir = "jsx_modules"
     pre_bundle_dir = "prebundle"
     post_bundle_dir = "postbundle"
     config_dir = "config"
