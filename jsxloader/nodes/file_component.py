@@ -1,0 +1,2 @@
+class JSXFileComponentNode:
+    pass
