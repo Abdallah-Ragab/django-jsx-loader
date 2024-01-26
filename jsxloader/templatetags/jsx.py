@@ -4,6 +4,7 @@ from django.conf import settings
 import os
 import random
 import string
+from pathlib import Path
 
 
 register = template.Library()
@@ -51,10 +52,12 @@ class JsxNode(template.Node):
         return False
 
     def get_dir(self, name):
-        path = os.path.join(settings.BASE_DIR, self.base_dir, name)
+        project_path = Path(settings.BASE_DIR)
+        base_path = project_path.joinpath(self.base_dir)
+        path = base_path.joinpath(name)
 
-        if not os.path.exists(path):
-            os.makedirs(path)
+        if not path.exists:
+            os.makedirs(path, exist_ok=True)
 
         return path
 
@@ -88,6 +91,7 @@ class JsxNode(template.Node):
             entry: '""" + self.pre_bundle_file + """',
             output: {
                 path: '""" + self.post_bundle_dir + """',
+                filename: '""" + self.id + ".js" + """',
             },
             module: {
                 rules: [
