@@ -69,7 +69,7 @@ class JsxNode(template.Node):
         return f'<div id="{self.id}"></div>'
 
     def bundle_jsx_file(self):
-        output_file = os.path.join(self.post_bundle_dir, self.id + ".js")
+        output_file = self.post_bundle_dir.joinpath(self.id + ".js")
 
         # command = f"npx webpack --mode development --entry {self.pre_bundle_file} --output-path {self.post_bundle_dir} --output-filename {self.id}.js --module-bind js=babel-loader"
         command = f'npx --yes webpack --mode development --config "{self.config_file}"'
@@ -84,7 +84,7 @@ class JsxNode(template.Node):
         return output_file
 
     def generate_config_file(self):
-        config_file = os.path.join(self.pre_bundle_dir, f"{self.id}.config.js")
+        config_file = self.pre_bundle_dir.joinpath(f"{self.id}.config.js")
 
         config_content = """
         module.exports = {
@@ -112,7 +112,7 @@ class JsxNode(template.Node):
         return self.write_file(config_file, config_content)
 
     def generate_jsx_render_js_file(self, target_id, jsx_content):
-        render_js_file = os.path.join(self.post_bundle_dir, f"{self.id}.js")
+        render_js_file = self.post_bundle_dir.joinpath(f"{self.id}.js")
 
         render_js_content = f"""
         import React from 'react';
