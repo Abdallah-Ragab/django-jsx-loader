@@ -34,8 +34,8 @@ class JsxNode(template.Node):
         self.config_dir = self.get_dir(self.config.config_dir)
 
         self.id = self.generate_random_id()
-        self.pre_bundle_file = os.path.join(self.pre_bundle_dir, self.id + ".jsx")
-        self.post_bundle_file = os.path.join(self.post_bundle_dir, self.id + ".js")
+        self.pre_bundle_file = self.pre_bundle_dir.joinpath(self.id + ".jsx")
+        self.post_bundle_file = self.post_bundle_dir.joinpath(self.id + ".js")
         # self.content = self.nodelist.render({})
 
     def write_file(self, path, content):
