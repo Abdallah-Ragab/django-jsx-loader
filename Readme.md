@@ -27,8 +27,8 @@ You can change configuration inside django's `settings.py`
 # settings.py
 
 JSX_LOADER = {
-    'base_dir': 'jsx',
-    'output_dir': 'static',
+    'base_dir': 'frontend',
+    'output_dir': 'output',
     ...
 }
 ```
