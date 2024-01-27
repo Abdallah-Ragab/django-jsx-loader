@@ -35,6 +35,24 @@ class ConfigTestCase(unittest.TestCase):
         # Assert that the Config object is the default Config
         self.assertEqual(result, Config(), "Config object should be the default Config")
 
+    def test_load_config_with_invalid_keys(self):
+        # Set the "JSX_LOADER_CONFIG" in Django's settings
+        settings.JSX_LOADER_CONFIG = {
+            "base_dir": "test_base_dir_value",
+            "config_dir": "test_config_dir_value",
+            "invalid_key": "invalid_value",
+        }
+
+        # Call the load_config function
+        result = load_config()
+
+        # Assert that the returned result is a Config object
+        self.assertIsInstance(result, Config)
+
+        # Assert that the Config object has the correct values
+        self.assertEqual(result.base_dir, "test_base_dir_value")
+        self.assertEqual(result.config_dir, "test_config_dir_value")
+        self.assertFalse(hasattr(result, "invalid_key"), "Config object should not have invalid keys.")
 
 if __name__ == "__main__":
     unittest.main()
