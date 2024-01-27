@@ -1,21 +1,8 @@
-import subprocess
 from django import template
-from django.conf import settings
-import os
-import random
-import string
-from pathlib import Path
 from ..nodes import JsxNode
 
 
 register = template.Library()
-
-class Config:
-    base_dir = "jsx_modules"
-    pre_bundle_dir = "prebundle"
-    post_bundle_dir = "postbundle"
-    config_dir = "config"
-
 
 @register.tag(name="jsx")
 def do_jsx(parser, token):
