@@ -3,6 +3,8 @@
 pip install django-jsx-loader
 ```
 
+install npm dependencies
+
 ```bash
 npm install --save-dev babel-loader @babel/preset-env @babel/preset-react webpack-cli react react-dom
 ```
