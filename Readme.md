@@ -38,8 +38,8 @@ JSX_LOADER = {
 
 Configration | Type | Description | Default
 --- | --- | --- | ---
-base_dir | String | The dir housing all other directories related to the jsx loader. | jsx_modules
-output_dir | String | The dir where the output script files will be placed. | static
+base_dir | String | The name of the directory housing all other directories related to the jsx loader. | jsx_modules
+output_dir | String | The name of the directory where the output script files will be placed. | static
 
 
 ## Usage :
