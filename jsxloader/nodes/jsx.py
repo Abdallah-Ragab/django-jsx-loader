@@ -1,3 +1,13 @@
+from ..config import Config
+import subprocess
+from django import template
+from django.conf import settings
+import os
+import random
+import string
+from pathlib import Path
+
+
 class JsxNode(template.Node):
     def __init__(self, nodelist):
         self.nodelist = nodelist
@@ -61,12 +71,20 @@ class JsxNode(template.Node):
     def generate_config_file(self):
         config_file = self.pre_bundle_dir.joinpath(f"{self.id}.config.js")
 
-        config_content = """
+        config_content = (
+            """
         module.exports = {
-            entry: '""" + self.pre_bundle_file.as_posix() + """',
+            entry: '"""
+            + self.pre_bundle_file.as_posix()
+            + """',
             output: {
-                path: '""" + self.post_bundle_dir.as_posix() + """',
-                filename: '""" + self.id + ".js" + """',
+                path: '"""
+            + self.post_bundle_dir.as_posix()
+            + """',
+                filename: '"""
+            + self.id
+            + ".js"
+            + """',
             },
             module: {
                 rules: [
@@ -84,6 +102,7 @@ class JsxNode(template.Node):
             }
         };
         """
+        )
         return self.write_file(config_file, config_content)
 
     def generate_jsx_render_js_file(self, target_id, jsx_content):
@@ -104,7 +123,5 @@ class JsxNode(template.Node):
             self.config_file = self.generate_config_file()
             self.bundle_jsx_file()
 
-
             return self.generate_placeholder_element()
         return ""
-
