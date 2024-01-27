@@ -1,3 +1,66 @@
+## Install:
+```bash
+pip install django-jsx-loader
+```
+
+```bash
+npm install --save-dev babel-loader @babel/preset-env @babel/preset-react webpack-cli react react-dom
+```
+## Setup:
+```python
+# settings.py
+INSTALLED_APPS = [
+    ...
+    'django_jsx_loader',
+    ...
+]
+```
+
+
+## Usage:
+
+- ### Inline JSX
+```html
+<!-- template.html -->
+{% load jsx_loader %}
+{% JSX %}
+    <div className="Component">
+        <h1>Hi, I'm a React App</h1>
+    </div>
+{% endJSX %}
+```
+
+- ### Jsx Component File
+
+```html
+<!-- template.html -->
+{% load jsx_loader %}
+{% JSXComponentFile 'components/counter.jsx' %}
+```
+
+- ### Inline Jsx Component
+
+```html
+<!-- template.html -->
+{% load jsx_loader %}
+{% JSXComponent %}
+    import
+    const Counter = () => {
+        const [count, setCount] = useState()
+        return (
+            <div className="Counter">
+                <h1>Hi, I'm a React Counter</h1>
+                <h2>{count}</h2>
+                <button onClick={() => setCount(count + 1)}>+</button>
+            </div>
+        );
+    }
+
+    export default Counter;
+{% endJSXComponent %}
+```
+```html
+
 ## Tags Types:
 - ### JSX Syntax :
 
@@ -38,9 +101,9 @@
   ```
 
 
-- ### Link to  JSX Component :
+- ### Link to a JSX Component file :
     ```
-    {% JSXComponentLink 'components/counter.jsx' %}
+    {% JSXComponentFile 'components/counter.jsx' %}
     ```
 - ### Static tag to import the bundled script
   ```
