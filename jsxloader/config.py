@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from django.conf import settings
 
+__all__ = ["Config", "load_config"]
+
 @dataclass(kw_only=True)
 class Config:
     base_dir: str = "jsx_modules"
