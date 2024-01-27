@@ -71,7 +71,8 @@ output_dir | String | The name of the directory where the output javascript file
 <!-- template.html -->
 {% load jsx_loader %}
 {% JSXComponent %}
-    import
+    import React, { useState } from 'react';
+
     const Counter = () => {
         const [count, setCount] = useState()
         return (
