@@ -1,9 +1,22 @@
 from dataclasses import dataclass
+from django.conf import settings
 
-@dataclass
+@dataclass(kw_only=True)
 class Config:
     base_dir: str = "jsx_modules"
     pre_bundle_dir: str = "prebundle"
     post_bundle_dir: str = "postbundle"
     config_dir: str = "config"
 
+def load_config():
+    # check if "JSX_LOADER_CONFIG" is set in django's settings
+    if hasattr(settings, "JSX_LOADER_CONFIG"):
+        config_dict = settings.JSX_LOADER_CONFIG
+        return dict_to_config(config_dict)
+    else:
+        config = Config()
+
+def dict_to_config(config_dict: dict) -> Config:
+    default_config = Config()
+    config_dict = filter(lambda key: hasattr(default_config, key), config_dict)
+    return Config(**config_dict)
