@@ -33,7 +33,7 @@ JSX_LOADER = {
 }
 ```
 
-### Configuration Options:
+### Configuration Options :
 
 
 Configration | Type | Description | Default
@@ -42,9 +42,9 @@ base_dir | String | The dir housing all other directories related to the jsx loa
 output_dir | String | The dir where the output script files will be placed. | static
 
 
-## Usage:
+## Usage :
 
-- ### Inline JSX
+- ### Inline JSX :
 ```html
 <!-- template.html -->
 {% load jsx_loader %}
@@ -55,7 +55,7 @@ output_dir | String | The dir where the output script files will be placed. | st
 {% endJSX %}
 ```
 
-- ### Jsx Component File
+- ### Jsx Component File :
 
 ```html
 <!-- template.html -->
@@ -63,7 +63,7 @@ output_dir | String | The dir where the output script files will be placed. | st
 {% JSXComponentFile 'components/counter.jsx' %}
 ```
 
-- ### Inline Jsx Component
+- ### Inline Jsx Component :
 
 ```html
 <!-- template.html -->
@@ -84,56 +84,6 @@ output_dir | String | The dir where the output script files will be placed. | st
     export default Counter;
 {% endJSXComponent %}
 ```
-```html
-
-## Tags Types:
-- ### JSX Syntax :
-
-  ```
-  {% JSX %}
-
-    <div className="Component">
-        <h1>Hi, I'm a React App</h1>
-    </div>
-
-  {% endJSX %}
-  ```
-  Cons
-    - No way to import components
-    - No way to use state
-    - No way to use lifecycle methods
-
-
-
-- ### Inline JSX Component :
-  ```
-  {% JSXComponent %}
-
-    const Counter = () => {
-        const [count, setCount] = useState()
-        return (
-            <div className="Counter">
-                <h1>Hi, I'm a React Counter</h1>
-                <h2>{count}</h2>
-                <button onClick={() => setCount(count + 1)}>+</button>
-            </div>
-        );
-    }
-
-    export default Counter;
-
-  {% endJSXComponent %}
-  ```
-
-
-- ### Link to a JSX Component file :
-    ```
-    {% JSXComponentFile 'components/counter.jsx' %}
-    ```
-- ### Static tag to import the bundled script
-  ```
-  {%  %}
-  ```
 
 ## Loading Steps :
 - Tag Content is copied to a temp file
