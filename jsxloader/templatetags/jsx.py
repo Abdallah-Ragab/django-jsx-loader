@@ -5,6 +5,7 @@ import os
 import random
 import string
 from pathlib import Path
+from ..nodes import JsxNode
 
 
 register = template.Library()
@@ -20,7 +21,6 @@ class Config:
 def do_jsx(parser, token):
     nodelist = parser.parse(("endjsx",))
     parser.delete_first_token()
-    print(fix_url("D:\Repositories\django-jsx-loader\node_modules\webpack\lib\Compilation.js"))
     return JsxNode(nodelist)
 
 
