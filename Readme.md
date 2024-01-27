@@ -16,6 +16,31 @@ INSTALLED_APPS = [
 ]
 ```
 
+## Configuration:
+
+You can change configuration inside django's `settings.py`
+
+***All paths are relative to the base directory of the project(where manage.py is)*
+
+
+```python
+# settings.py
+
+JSX_LOADER = {
+    'base_dir': 'jsx',
+    'output_dir': 'static',
+    ...
+}
+```
+
+### Configuration Options:
+
+
+Configration | Type | Description | Default
+--- | --- | --- | ---
+base_dir | String | The dir housing all other directories related to the jsx loader. | jsx_modules
+output_dir | String | The dir where the output script files will be placed. | static
+
 
 ## Usage:
 
