@@ -1,4 +1,4 @@
-## Install:
+## Install :
 ```bash
 pip install django-jsx-loader
 ```
@@ -6,7 +6,7 @@ pip install django-jsx-loader
 ```bash
 npm install --save-dev babel-loader @babel/preset-env @babel/preset-react webpack-cli react react-dom
 ```
-## Setup:
+## Setup :
 ```python
 # settings.py
 INSTALLED_APPS = [
@@ -16,7 +16,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-## Configuration:
+## Configuration :
 
 You can change configuration inside django's `settings.py`
 
