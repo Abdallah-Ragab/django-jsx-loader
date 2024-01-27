@@ -3,10 +3,10 @@ from django.template import Context
 
 
 class JSXFileComponentNode(template.Node):
-    def __init__(self, nodelist, *args, **kwargs):
+    def __init__(self, path, *args, **kwargs):
         super(JSXFileComponentNode, self).__init__(*args, **kwargs)
-        self.nodelist = nodelist
+        self.path = path
 
     def render(self, context: Context) -> str:
         print(f"From JSX Syntax Node: {context.template.name}")
-        return self.nodelist.render(context)
+        return self.path
