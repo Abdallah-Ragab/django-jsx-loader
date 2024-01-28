@@ -25,13 +25,13 @@ def clean_js_variable_name(var_name: str) -> str:
 
 def hash_string(string: str) -> str:
     """
-    Hashes a given string using SHA256 algorithm and returns the first 8 alphanumeric characters of the hash.
+    Hashes a given string using SHA256 algorithm and returns the hash.
 
     Args:
         string (str): The string to be hashed.
 
     Returns:
-        str: The first 8 alphanumeric characters of the hash.
+        str: The alphanumeric characters of the hash.
     """
     hash_object = hashlib.sha256(string.encode())
     hex_digest = hash_object.hexdigest()
@@ -43,4 +43,4 @@ def hash_string(string: str) -> str:
     # Keep only alphanumeric characters in the output
     result = "".join(char for char in hex_digest if char.isalnum())
 
-    return result[:8]
+    return result
