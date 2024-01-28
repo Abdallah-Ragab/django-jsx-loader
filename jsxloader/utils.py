@@ -12,7 +12,7 @@ def clean_js_variable_name(var_name: str) -> str:
     Returns:
         str: The cleaned variable name.
     """
-    if var_name[0].isdigit():
+    while var_name[0].isdigit():
         var_name = "_" + var_name
 
     var_name = re.sub("[^0-9a-zA-Z_]+", "", var_name)
@@ -36,9 +36,6 @@ def hash_string(string: str) -> str:
     hash_object = hashlib.sha256(string.encode())
     hex_digest = hash_object.hexdigest()
     hex_digest = str(hex_digest)
-
-    while not hex_digest[0].isalpha():
-        hex_digest = hex_digest[1:]
 
     # Keep only alphanumeric characters in the output
     result = "".join(char for char in hex_digest if char.isalnum())
