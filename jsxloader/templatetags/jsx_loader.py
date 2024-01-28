@@ -1,8 +1,12 @@
 from django import template
-from ..nodes import JsxNode, JSXFileComponentNode, JSXInlineComponentNode, JSXSyntaxNode
+from ..nodes import JsxNode, JSXFileComponentNode, JSXInlineComponentNode, JSXSyntaxNode, JSXScriptNode
 
 
 register = template.Library()
+
+@register.tag(name="JSXScript")
+def do_jsx_script(parser, token):
+    return JSXScriptNode()
 
 @register.tag(name="JSX")
 def do_jsx(parser, token):
