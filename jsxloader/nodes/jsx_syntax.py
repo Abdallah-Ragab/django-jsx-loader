@@ -27,4 +27,4 @@ class JSXSyntaxNode(template.Node):
     def render(self, context: Context) -> str:
         print(f"From JSX Syntax Node: {context.template.name}")
         self.jsx = self.nodelist.render(context)
-        self.wrap_jsx_in_component()
+        return self.wrap_jsx_in_component()
