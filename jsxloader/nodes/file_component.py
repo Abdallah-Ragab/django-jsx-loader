@@ -9,5 +9,5 @@ class JSXFileComponentNode(JSXNode):
 
     def render(self, context: Context) -> str:
         super(JSXFileComponentNode, self).render(context)
-        print(f"From JSX File Component Node: {self.template_name}:{self.get_index()}")
+        print(f"From JSX File Component Node: {self.id}")
         return self.path
