@@ -7,6 +7,14 @@ import random
 import string
 from pathlib import Path
 
+class JSXNode(template.Node):
+    def increase_node_count (self, context):
+        context["jsx_loader"]["_counter"] += 1
+
+    def render(self, context) -> str:
+        self.increase_node_count(context)
+
+
 
 class JsxNode(template.Node):
     def __init__(self, nodelist):
