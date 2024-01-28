@@ -41,3 +41,18 @@ def hash_string(string: str) -> str:
     result = "".join(char for char in hex_digest if char.isalnum())
 
     return result
+
+
+def template_name_to_dotted_path(template_name: str) -> str:
+    """
+    Converts a template name to a dotted path.
+
+    Args:
+        template_name (str): The template name to convert.
+
+    Returns:
+        str: The converted dotted path.
+    """
+    template_name = template_name.strip("/.\\")
+    template_name = template_name.split(".")[0]
+    return template_name.replace("/", ".")
