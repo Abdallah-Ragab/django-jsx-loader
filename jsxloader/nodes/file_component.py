@@ -8,5 +8,5 @@ class JSXFileComponentNode(template.Node):
         self.path = path
 
     def render(self, context: Context) -> str:
-        print(f"From JSX Syntax Node: {context.template.name}")
+        print(f"From JSX File Component Node: {context.template.name}")
         return self.path

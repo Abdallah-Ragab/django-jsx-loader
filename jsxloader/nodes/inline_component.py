@@ -8,5 +8,5 @@ class JSXInlineComponentNode(template.Node):
         self.nodelist = nodelist
 
     def render(self, context: Context) -> str:
-        print(f"From JSX Syntax Node: {context.template.name}")
+        print(f"From JSX Inline Component Node: {context.template.name}")
         return self.nodelist.render(context)
