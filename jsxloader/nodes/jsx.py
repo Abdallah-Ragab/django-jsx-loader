@@ -1,4 +1,5 @@
 from ..config import Config
+from ..utils import template_name_to_dotted_path
 import subprocess
 from django import template
 from django.conf import settings
@@ -7,8 +8,9 @@ import random
 import string
 from pathlib import Path
 
+
 class JSXNode(template.Node):
-    def increase_node_count (self):
+    def increase_node_count(self):
         self.context["jsx_loader"]["_counter"] += 1
 
     def get_index(self):
@@ -20,13 +22,18 @@ class JSXNode(template.Node):
     def get_template_name(self):
         return self.context.template.name
 
+    def get_component_id(self):
+        return ".".join(
+            [template_name_to_dotted_path(self.template_name), str(self.index)]
+        )
+
     def render(self, context) -> str:
         self.context = context
         self.template_path = self.get_template_path()
         self.template_name = self.get_template_name()
         self.increase_node_count()
         self.index = self.get_index()
-
+        self.id = self.get_component_id()
 
 
 class JsxNode(template.Node):
