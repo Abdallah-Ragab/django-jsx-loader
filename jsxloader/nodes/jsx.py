@@ -8,11 +8,24 @@ import string
 from pathlib import Path
 
 class JSXNode(template.Node):
-    def increase_node_count (self, context):
-        context["jsx_loader"]["_counter"] += 1
+    def increase_node_count (self):
+        self.context["jsx_loader"]["_counter"] += 1
+
+    def get_index(self):
+        return self.context["jsx_loader"]["_counter"]
+
+    def get_template_path(self):
+        return self.context.template.origin.name
+
+    def get_template_name(self):
+        return self.context.template.name
 
     def render(self, context) -> str:
-        self.increase_node_count(context)
+        self.context = context
+        self.template_path = self.get_template_path()
+        self.template_name = self.get_template_name()
+        self.increase_node_count()
+        self.index = self.get_index()
 
 
 
