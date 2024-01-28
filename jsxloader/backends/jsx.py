@@ -28,6 +28,8 @@ class JSXSupportedTemplate:
             context, request, autoescape=self.backend.engine.autoescape
         )
         try:
-            return self.template.render(context)
+            result = self.template.render(context)
+            # build jsx bundle
+            return result
         except TemplateDoesNotExist as exc:
             reraise(exc, self.backend)
