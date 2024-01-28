@@ -1,4 +1,5 @@
-from django.template.backends.django import DjangoTemplates, Template, reraise
+from django.template.backends.django import DjangoTemplates, reraise
+from django.template.context import make_context
 from django.template import TemplateDoesNotExist
 
 
@@ -13,8 +14,20 @@ class JSXLoaderEngine(DjangoTemplates):
             reraise(exc, self)
 
 
-class JSXSupportedTemplate(Template):
+class JSXSupportedTemplate:
+    def __init__(self, template, backend):
+        self.template = template
+        self.backend = backend
+
+    @property
+    def origin(self):
+        return self.template.origin
+
     def render(self, context=None, request=None):
-        result = super(JSXSupportedTemplate).render(self, context, request)
-        # build jsx scripts
-        return result
+        context = make_context(
+            context, request, autoescape=self.backend.engine.autoescape
+        )
+        try:
+            return self.template.render(context)
+        except TemplateDoesNotExist as exc:
+            reraise(exc, self.backend)
