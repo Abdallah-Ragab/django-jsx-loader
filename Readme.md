@@ -16,6 +16,16 @@ INSTALLED_APPS = [
     'django_jsx_loader',
     ...
 ]
+
+...
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django-jsx-loader.backends.JSXLoaderEngine',
+        ...
+    },
+]
+
 ```
 
 ## Configuration :
