@@ -27,6 +27,7 @@ class JSXSupportedTemplate:
         context = make_context(
             context, request, autoescape=self.backend.engine.autoescape
         )
+        print(context)
         try:
             result = self.template.render(context)
             # build jsx bundle
