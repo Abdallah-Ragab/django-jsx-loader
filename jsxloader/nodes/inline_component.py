@@ -9,6 +9,6 @@ class JSXInlineComponentNode(JSXNode):
         self.nodelist = nodelist
 
     def render(self, context: Context) -> str:
-        super(JSXInlineComponentNode).render(context)
-        print(f"From JSX Inline Component Node: {context.template.name}")
+        super(JSXInlineComponentNode, self).render(context)
+        print(f"From JSX Inline Component Node: {self.get_index()}")
         return self.nodelist.render(context)

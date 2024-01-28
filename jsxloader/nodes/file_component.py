@@ -8,6 +8,6 @@ class JSXFileComponentNode(JSXNode):
         self.path = path
 
     def render(self, context: Context) -> str:
-        super(JSXFileComponentNode).render(context)
-        print(f"From JSX File Component Node: {context.template.name}")
+        super(JSXFileComponentNode, self).render(context)
+        print(f"From JSX File Component Node: {self.get_index()}")
         return self.path
